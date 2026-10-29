@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>EduClass — E-Learning Matematika</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="brand"><div class="brand-mark">E</div><div><strong>EduClass</strong><small>Ruang belajar digital</small></div></div>
+    <div class="school-label">IDENTITAS SEKOLAH</div>
+    <div class="school-name" id="schoolNameSide">SMA / SMK Anda</div>
+    <nav id="navigation">
+      <button class="nav-item active" data-page="dashboard"><span>▦</span> Beranda</button>
+      <button class="nav-item" data-page="materi"><span>▤</span> Materi Integral</button>
+      <button class="nav-item" data-page="kuis"><span>✓</span> Kuis & Latihan</button>
+      <button class="nav-item" data-page="tugas"><span>▣</span> Tugas</button>
+      <button class="nav-item" data-page="nilai"><span>▥</span> Nilai</button>
+      <button class="nav-item" data-page="absensi"><span>◷</span> Absensi</button>
+      <button class="nav-item" data-page="diskusi"><span>☏</span> Diskusi Kelas</button>
+      <button class="nav-item" data-page="pengaturan"><span>⚙</span> Pengaturan</button>
+    </nav>
+    <div class="sidebar-bottom"><div class="avatar">S</div><div><strong>Siswa Demo</strong><small>Peserta didik</small></div><span class="online-dot"></span></div>
+  </aside>
+  <main class="main">
+    <header class="topbar"><div class="crumb">Kelas / <strong id="crumbTitle">Beranda</strong></div><div class="top-actions"><span class="today" id="today"></span><button class="icon-btn" title="Info">ⓘ</button><div class="avatar small">S</div></div></header>
+    <div class="page-wrap">
+      <section class="page active" id="page-dashboard">
+        <div class="welcome"><div><p class="eyebrow">KELAS MATEMATIKA • SMA/SMK</p><h1>Belajar integral, <span>selangkah demi selangkah.</span></h1><p class="sub">Pahami konsep, coba latihan, dan pantau perkembangan belajarmu.</p><button class="primary-btn" data-goto="materi">Mulai belajar <span>→</span></button></div><div class="hero-art"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="integral-symbol">∫</div><div class="formula-card">∫ f(x) dx = F(x) + C</div><div class="mini-dot d1"></div><div class="mini-dot d2"></div></div></div>
+        <div class="stats-grid">
+          <div class="stat-card"><div class="stat-icon purple">▤</div><div><span>Materi tersedia</span><strong>8 topik</strong><small>Integral SMA/SMK</small></div></div>
+          <div class="stat-card"><div class="stat-icon blue">✓</div><div><span>Nilai kuis terakhir</span><strong id="lastScore">—</strong><small id="scoreHint">Belum ada percobaan</small></div></div>
+          <div class="stat-card"><div class="stat-icon green">◷</div><div><span>Kehadiran</span><strong id="attendanceSummary">0 kali</strong><small>Absensi tercatat di perangkat ini</small></div></div>
+        </div>
+        <div class="content-grid">
+          <div class="panel"><div class="panel-heading"><div><h2>Lanjutkan pembelajaran</h2><p>Materi yang bisa kamu pelajari hari ini</p></div><button class="text-btn" data-goto="materi">Lihat semua →</button></div><div id="featuredLessons" class="lesson-list"></div></div>
+          <div class="panel progress-panel"><div class="panel-heading"><div><h2>Progres belajar</h2><p>Catatan di browser ini</p></div></div><div class="progress-ring"><div><strong id="progressPercent">0%</strong><small>selesai</small></div></div><p class="center muted">Tandai materi sebagai selesai setelah dipelajari.</p><div class="progress-track"><span id="progressBar"></span></div><div class="progress-foot"><span>Materi selesai</span><strong id="progressCount">0 dari 8</strong></div></div>
+        </div>
+        <div class="notice"><div class="notice-icon">✦</div><div><strong>Tips belajar</strong><p>Integral tak tentu berkaitan dengan antiturunan. Coba cek hasil integral dengan menurunkannya kembali.</p></div></div>
+      </section>
+      <section class="page" id="page-materi"><div class="section-title"><div><p class="eyebrow">PERPUSTAKAAN KELAS</p><h1>Materi Integral</h1><p class="sub">Pilih topik untuk membaca ringkasan, contoh, dan eksplorasi interaktif.</p></div><span class="pill">8 topik pembelajaran</span></div><div class="topic-grid" id="topicGrid"></div><div class="panel lesson-detail" id="lessonDetail"><div class="empty-state">Pilih salah satu materi di atas untuk mulai belajar.</div></div></section>
+      <section class="page" id="page-kuis"><div class="section-title"><div><p class="eyebrow">UJI PEMAHAMAN</p><h1>Kuis & Latihan</h1><p class="sub">Pilih jawaban. EduClass akan memberi umpan balik setelah diperiksa.</p></div><span class="pill">Kuis formatif</span></div><div class="quiz-layout"><div class="panel quiz-panel"><div class="quiz-top"><span class="pill">LATIHAN INTEGRAL DASAR</span><span id="questionCount">Soal 1 dari 5</span></div><div class="quiz-progress"><span id="quizProgressBar"></span></div><div id="quizBody"></div><div class="quiz-controls"><button class="secondary-btn" id="prevQuestion">← Sebelumnya</button><button class="primary-btn" id="nextQuestion">Berikutnya →</button><button class="primary-btn hidden" id="submitQuiz">Periksa jawaban ✓</button></div><div id="quizResult"></div></div><aside class="panel quiz-side"><div class="side-symbol">∫</div><h3>Ingat konsepnya</h3><p>Untuk integral tak tentu, tambahkan konstanta integrasi <strong>C</strong>.</p><div class="formula-box">∫ xⁿ dx = xⁿ⁺¹/(n+1) + C</div><small class="muted">Berlaku untuk n ≠ −1.</small></aside></div></section>
+      <section class="page" id="page-tugas"><div class="section-title"><div><p class="eyebrow">KEGIATAN KELAS</p><h1>Tugas</h1><p class="sub">Baca instruksi dan tandai tugas yang sudah dikumpulkan.</p></div></div><div class="panel"><div class="table-wrap"><table><thead><tr><th>Nama tugas</th><th>Instruksi</th><th>Tenggat</th><th>Status</th><th>Aksi</th></tr></thead><tbody id="taskRows"></tbody></table></div><p class="footnote">Versi awal: status tugas disimpan di browser. Pengumpulan berkas belum terhubung ke server.</p></div></section>
+      <section class="page" id="page-nilai"><div class="section-title"><div><p class="eyebrow">HASIL BELAJAR</p><h1>Nilai</h1><p class="sub">Rekap nilai kuis dan aktivitas pada perangkat ini.</p></div></div><div class="stats-grid"><div class="stat-card"><div class="stat-icon purple">✓</div><div><span>Nilai kuis tertinggi</span><strong id="bestScore">—</strong><small>Dari percobaan tersimpan</small></div></div><div class="stat-card"><div class="stat-icon blue">∑</div><div><span>Jumlah percobaan</span><strong id="attemptCount">0</strong><small>Kuis integral dasar</small></div></div><div class="stat-card"><div class="stat-icon green">▤</div><div><span>Tugas selesai</span><strong id="taskCount">0/3</strong><small>Status tugas demo</small></div></div></div><div class="panel"><div class="panel-heading"><div><h2>Riwayat penilaian</h2><p>Data lokal, belum tersinkron dengan guru</p></div></div><div class="table-wrap"><table><thead><tr><th>Aktivitas</th><th>Tanggal</th><th>Nilai / Status</th></tr></thead><tbody id="gradeRows"></tbody></table></div></div></section>
+      <section class="page" id="page-absensi"><div class="section-title"><div><p class="eyebrow">KEHADIRAN</p><h1>Absensi kelas</h1><p class="sub">Catat kehadiran untuk demonstrasi awal.</p></div></div><div class="attendance-layout"><div class="panel attendance-card"><div class="attendance-icon">◷</div><h2>Presensi hari ini</h2><p class="muted" id="attendanceDate"></p><label for="studentName">Nama siswa</label><input id="studentName" class="field" value="Siswa Demo" placeholder="Masukkan nama"><label for="attendanceStatus">Status kehadiran</label><select id="attendanceStatus" class="field"><option>Hadir</option><option>Izin</option><option>Sakit</option></select><button class="primary-btn full" id="markAttendance">Simpan absensi</button><p id="attendanceMessage" class="feedback"></p></div><div class="panel"><div class="panel-heading"><div><h2>Riwayat absensi</h2><p>Catatan yang tersimpan di perangkat ini</p></div></div><div id="attendanceHistory"></div></div></div></section>
+      <section class="page" id="page-diskusi"><div class="section-title"><div><p class="eyebrow">BELAJAR BERSAMA</p><h1>Diskusi kelas</h1><p class="sub">Tuliskan pertanyaan atau berbagi cara menyelesaikan soal.</p></div></div><div class="discussion-layout"><div class="panel discussion-compose"><h2>Mulai diskusi</h2><label for="discussionName">Nama</label><input id="discussionName" class="field" value="Siswa Demo"><label for="discussionText">Pesan diskusi</label><textarea id="discussionText" class="field" rows="4" placeholder="Contoh: Mengapa integral x² menjadi x³/3?"></textarea><button id="postDiscussion" class="primary-btn">Kirim pesan ↗</button><p class="footnote">Pesan hanya tersimpan di browser ini, belum terlihat oleh pengguna lain.</p></div><div class="panel"><div class="panel-heading"><div><h2>Ruang diskusi</h2><p id="discussionCount">0 pesan</p></div></div><div id="discussionFeed"></div></div></div></section>
+      <section class="page" id="page-pengaturan"><div class="section-title"><div><p class="eyebrow">PERSONALISASI</p><h1>Pengaturan EduClass</h1><p class="sub">Sesuaikan nama sekolah, warna identitas, dan nama kelas.</p></div></div><div class="panel settings-panel"><h2>Identitas sekolah</h2><div class="settings-grid"><div><label for="schoolName">Nama sekolah</label><input class="field" id="schoolName" placeholder="Contoh: SMA Negeri 1 Contoh"></div><div><label for="className">Nama kelas</label><input class="field" id="className" placeholder="Contoh: XI IPA 1"></div><div><label for="primaryColor">Warna utama</label><div class="color-row"><input type="color" id="primaryColor" value="#6558d3"><span>Warna tombol dan aksen utama</span></div></div><div><label for="accentColor">Warna aksen</label><div class="color-row"><input type="color" id="accentColor" value="#25a78a"><span>Warna progres dan aksen kedua</span></div></div></div><div class="settings-actions"><button class="primary-btn" id="saveSettings">Simpan perubahan</button><button class="secondary-btn" id="resetData">Reset data demo</button></div><p id="settingsMessage" class="feedback"></p><div class="notice"><div class="notice-icon">i</div><div><strong>Catatan penting</strong><p>Ini implementasi frontend untuk prototipe. Login multi-pengguna, sinkronisasi nilai, database, unggah tugas, dan absensi resmi membutuhkan backend serta autentikasi.</p></div></div></div></section>
+      <footer>© <span id="year"></span> EduClass · E-Learning Matematika <span>Dirancang untuk dapat disesuaikan</span></footer>
+    </div>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
