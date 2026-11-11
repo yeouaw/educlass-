@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Media Pembelajaran Matematika</title>
+<style>
+:root{--primary:#3157c8;--dark:#203b91;--bg:#f3f6fc;--text:#1e293b;--muted:#64748b}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--text)}
+button,input{font:inherit}button{cursor:pointer;border:0;border-radius:10px;padding:11px 16px;background:var(--primary);color:white;font-weight:700}
+button:hover{background:var(--dark)}.secondary{background:#e8edff;color:var(--dark)}.danger{background:#dc3545}
+.container{max-width:1050px;margin:35px auto;padding:20px}.card{background:white;border-radius:18px;padding:25px;box-shadow:0 8px 28px #1e293b12}
+.login-wrap{max-width:440px;margin:7vh auto}.brand{text-align:center;margin-bottom:22px}.brand h1{margin-bottom:8px;color:var(--dark)}
+label{display:block;font-weight:700;margin:15px 0 7px}input{width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:9px}
+.roles{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:18px 0}.role{background:#f1f5ff;color:var(--dark);border:2px solid transparent}.role.active{border-color:var(--primary);background:#e5ebff}
+.full{width:100%;margin-top:18px}.hint{font-size:13px;color:var(--muted);line-height:1.6}.error{color:#c62828;font-size:14px;margin-top:12px}
+header{background:white;padding:15px 24px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 12px #0000000b}
+header strong{color:var(--dark)}.dashboard{max-width:1050px;margin:28px auto;padding:0 20px}
+.welcome{background:linear-gradient(120deg,#3157c8,#6c8af0);color:white;padding:28px;border-radius:18px;margin-bottom:20px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:18px}
+.tile{background:white;padding:20px;border-radius:15px;box-shadow:0 5px 20px #1e293b0b}.tile h3{margin-top:0;color:var(--dark)}
+.panel{margin-top:18px}.hidden{display:none}.item{padding:13px 0;border-bottom:1px solid #e2e8f0}.item:last-child{border:0}
+textarea{width:100%;min-height:90px;padding:12px;border:1px solid #cbd5e1;border-radius:9px;font:inherit}
+.inline{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}.inline input{flex:1;min-width:180px}
+.quiz-option{display:block;margin:10px 0;font-weight:400}.quiz-option input{width:auto;margin-right:8px}
+.notice{padding:12px;background:#fff7df;border-radius:10px;color:#765500;font-size:13px;margin-top:15px}
+@media(max-width:600px){.container{margin:15px auto;padding:12px}.card{padding:20px}header{padding:13px}.welcome{padding:22px}}
+</style>
+</head>
+<body>
+<section id="loginPage" class="container">
+  <div class="login-wrap card">
+    <div class="brand"><h1>IntegraLearn</h1><p>Media Pembelajaran Matematika</p></div>
+    <p><b>Masuk sebagai:</b></p>
+    <div class="roles">
+      <button type="button" id="teacherRole" class="role active" onclick="chooseRole('guru')">👩‍🏫 Guru</button>
+      <button type="button" id="studentRole" class="role" onclick="chooseRole('siswa')">🎓 Siswa</button>
+    </div>
+    <form id="loginForm">
+      <label for="username">Username</label><input id="username" autocomplete="username" placeholder="Masukkan username" required>
+      <label for="password">Password</label><input id="password" type="password" autocomplete="current-password" placeholder="Masukkan password" required>
+      <button class="full" type="submit">Masuk</button>
+      <div id="error" class="error" role="alert"></div>
+    </form>
+    <div class="notice"><b>Akun demo</b><br>Guru: <code>guru</code> / <code>guru123</code><br>Siswa: <code>siswa</code> / <code>siswa123</code></div>
+    <p class="hint">Contoh ini menggunakan akun demo di dalam JavaScript. Untuk penggunaan nyata, autentikasi harus dipindahkan ke server dan database.</p>
+  </div>
+</section>
+
+<section id="appPage" class="hidden">
+<header><strong>📘 IntegraLearn</strong><div><span id="userLabel"></span> &nbsp; <button class="danger" onclick="logout()">Keluar</button></div></header>
+<main class="dashboard">
+  <div class="welcome"><h1 id="welcomeTitle">Selamat datang!</h1><p id="welcomeText"></p></div>
+  <div id="teacherArea" class="hidden">
+    <div class="grid">
+      <div class="tile"><h3>📚 Materi</h3><p>Tambahkan materi pembelajaran untuk siswa.</p><button onclick="showTeacherPanel('materials')">Kelola materi</button></div>
+      <div class="tile"><h3>📝 Kuis</h3><p>Buat pertanyaan pilihan ganda sederhana.</p><button onclick="showTeacherPanel('quiz')">Kelola kuis</button></div>
+      <div class="tile"><h3>📊 Nilai siswa</h3><p>Lihat hasil kuis yang tersimpan di browser ini.</p><button onclick="showTeacherPanel('scores')">Lihat nilai</button></div>
+    </div>
+    <div id="materialsPanel" class="card panel hidden">
+      <h2>Kelola materi</h2><label for="materialTitle">Judul materi</label><input id="materialTitle" placeholder="Contoh: Barisan Aritmatika">
+      <label for="materialBody">Isi materi</label><textarea id="materialBody" placeholder="Tuliskan materi di sini..."></textarea>
+      <button onclick="addMaterial()">Simpan materi</button><div id="teacherMaterials"></div>
+    </div>
+    <div id="quizPanel" class="card panel hidden">
+      <h2>Buat kuis pilihan ganda</h2>
+      <label for="question">Pertanyaan</label><input id="question" placeholder="Contoh: 2, 4, 6, ... suku berikutnya?">
+      <label for="optA">Pilihan A</label><input id="optA" placeholder="Pilihan A">
+      <label for="optB">Pilihan B</label><input id="optB" placeholder="Pilihan B">
+      <label for="optC">Pilihan C</label><input id="optC" placeholder="Pilihan C">
+      <label for="answer">Jawaban benar</label><select id="answer"><option value="0">A</option><option value="1">B</option><option value="2">C</option></select>
+      <button onclick="addQuestion()">Simpan pertanyaan</button><div id="teacherQuestions"></div>
+    </div>
+    <div id="scoresPanel" class="card panel hidden"><h2>Hasil kuis siswa</h2><div id="scoreList"></div></div>
+  </div>
+  <div id="studentArea" class="hidden">
+    <div class="grid">
+      <div class="tile"><h3>📚 Materi pembelajaran</h3><p>Baca materi yang dibagikan guru.</p><button onclick="showStudentPanel('studentMaterials')">Buka materi</button></div>
+      <div class="tile"><h3>📝 Kuis matematika</h3><p>Kerjakan kuis dan lihat hasilnya.</p><button onclick="showStudentPanel('studentQuiz')">Mulai kuis</button></div>
+    </div>
+    <div id="studentMaterials" class="card panel hidden"><h2>Materi pembelajaran</h2><div id="materialList"></div></div>
+    <div id="studentQuiz" class="card panel hidden"><h2>Kuis matematika</h2><div id="quizList"></div></div>
+  </div>
+</main>
+</section>
+<script>
+let selectedRole='guru';
+let currentUser=null;
+const accounts={
+  guru:{password:'guru123',name:'Guru Matematika'},
+  siswa:{password:'siswa123',name:'Siswa'}
+};
+const getData=(key,fallback)=>{try{return JSON.parse(localStorage.getItem(key)) ?? fallback}catch{return fallback}};
+const setData=(key,value)=>localStorage.setItem(key,JSON.stringify(value));
+let materials=getData('integralearn_materials',[
+  {title:'Pengenalan Barisan Aritmatika',body:'Barisan aritmatika adalah barisan bilangan yang memiliki selisih tetap antara dua suku berurutan.'}
+]);
+let questions=getData('integralearn_questions',[
+  {q:'Barisan 2, 4, 6, 8, ... memiliki beda berapa?',options:['1','2','3'],answer:1}
+]);
+let scores=getData('integralearn_scores',[]);
+function chooseRole(role){
+  selectedRole=role;
+  document.getElementById('teacherRole').classList.toggle('active',role==='guru');
+  document.getElementById('studentRole').classList.toggle('active',role==='siswa');
+  document.getElementById('error').textContent='';
+}
+document.getElementById('loginForm').addEventListener('submit',e=>{
+  e.preventDefault();
+  const username=document.getElementById('username').value.trim().toLowerCase();
+  const password=document.getElementById('password').value;
+  if(username!==selectedRole || accounts[selectedRole].password!==password){
+    document.getElementById('error').textContent='Username, password, atau role tidak sesuai.';
+    return;
+  }
+  currentUser={role:selectedRole,name:accounts[selectedRole].name};
+  document.getElementById('loginPage').classList.add('hidden');
+  document.getElementById('appPage').classList.remove('hidden');
+  document.getElementById('userLabel').textContent=currentUser.name;
+  document.getElementById('welcomeTitle').textContent='Halo, '+currentUser.name+'!';
+  document.getElementById('welcomeText').textContent=selectedRole==='guru'?'Kelola materi, kuis, dan hasil belajar siswa.':'Selamat belajar! Pilih materi atau kerjakan kuis matematika.';
+  document.getElementById('teacherArea').classList.toggle('hidden',selectedRole!=='guru');
+  document.getElementById('studentArea').classList.toggle('hidden',selectedRole!=='siswa');
+  if(selectedRole==='guru')renderTeacher(); else renderStudent();
+});
+function logout(){
+  currentUser=null;document.getElementById('appPage').classList.add('hidden');
+  document.getElementById('loginPage').classList.remove('hidden');
+  document.getElementById('loginForm').reset();chooseRole('guru');
+}
+function showTeacherPanel(name){
+  ['materialsPanel','quizPanel','scoresPanel'].forEach(id=>document.getElementById(id).classList.add('hidden'));
+  document.getElementById(name+'Panel').classList.remove('hidden');renderTeacher();
+}
+function showStudentPanel(id){
+  ['studentMaterials','studentQuiz'].forEach(x=>document.getElementById(x).classList.add('hidden'));
+  document.getElementById(id).classList.remove('hidden');renderStudent();
+}
+function addMaterial(){
+  const title=document.getElementById('materialTitle').value.trim(),body=document.getElementById('materialBody').value.trim();
+  if(!title||!body){alert('Judul dan isi materi harus diisi.');return}
+  materials.push({title,body});setData('integralearn_materials',materials);
+  document.getElementById('materialTitle').value='';document.getElementById('materialBody').value='';
+  renderTeacher();alert('Materi tersimpan di browser ini.');
+}
+function addQuestion(){
+  const q=document.getElementById('question').value.trim();
+  const options=['optA','optB','optC'].map(id=>document.getElementById(id).value.trim());
+  if(!q||options.some(x=>!x)){alert('Pertanyaan dan semua pilihan harus diisi.');return}
+  questions.push({q,options,answer:Number(document.getElementById('answer').value)});
+  setData('integralearn_questions',questions);
+  ['question','optA','optB','optC'].forEach(id=>document.getElementById(id).value='');
+  renderTeacher();alert('Pertanyaan berhasil ditambahkan.');
+}
+function renderTeacher(){
+  document.getElementById('teacherMaterials').innerHTML='<h3>Daftar materi</h3>'+materials.map(m=>`<div class="item"><b>${escapeHTML(m.title)}</b><p>${escapeHTML(m.body)}</p></div>`).join('');
+  document.getElementById('teacherQuestions').innerHTML='<h3>Daftar kuis</h3>'+questions.map((q,i)=>`<div class="item">${i+1}. ${escapeHTML(q.q)}</div>`).join('');
+  document.getElementById('scoreList').innerHTML=scores.length?scores.map(s=>`<div class="item"><b>${escapeHTML(s.name)}</b> — ${s.score}/${s.total} (${s.date})</div>`).join(''):'Belum ada hasil kuis.';
+}
+function renderStudent(){
+  document.getElementById('materialList').innerHTML=materials.length?materials.map(m=>`<div class="item"><h3>${escapeHTML(m.title)}</h3><p>${escapeHTML(m.body)}</p></div>`).join(''):'Belum ada materi.';
+  const host=document.getElementById('quizList');
+  if(!questions.length){host.textContent='Belum ada kuis dari guru.';return}
+  host.innerHTML='<form id="studentQuizForm">'+questions.map((q,i)=>`<div class="item"><b>${i+1}. ${escapeHTML(q.q)}</b>${q.options.map((o,j)=>`<label class="quiz-option"><input type="radio" name="q${i}" value="${j}" required> ${String.fromCharCode(65+j)}. ${escapeHTML(o)}</label>`).join('')}</div>`).join('')+'<button type="submit">Kirim jawaban</button></form><div id="quizResult"></div>';
+  document.getElementById('studentQuizForm').addEventListener('submit',e=>{
+    e.preventDefault();let score=0;
+    questions.forEach((q,i)=>{const chosen=document.querySelector(`input[name="q${i}"]:checked`);if(chosen&&Number(chosen.value)===q.answer)score++});
+    scores.push({name:currentUser.name,score,total:questions.length,date:new Date().toLocaleString('id-ID')});setData('integralearn_scores',scores);
+    document.getElementById('quizResult').innerHTML=`<div class="notice">Kuis selesai. Nilai kamu: <b>${Math.round(score/questions.length*100)}</b> (${score} dari ${questions.length} benar).</div>`;
+    document.querySelectorAll('#studentQuizForm input, #studentQuizForm button').forEach(el=>el.disabled=true);
+  });
+}
+function escapeHTML(value){return String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+</script>
+</body>
+</html>
